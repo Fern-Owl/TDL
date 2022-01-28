@@ -14,7 +14,7 @@ function deleteTask(task) {
   }
 }
 
-function outputHelper(status) {
+function outputFormatter(status) {
   console.log(`${status}:`);
   let counter = 0;
   for (let key in list) {
@@ -29,9 +29,9 @@ function outputHelper(status) {
 }
 
 function showList() {
-  outputHelper('To Do');
-  outputHelper('In Progress');
-  outputHelper('Done');
+  outputFormatter('To Do');
+  outputFormatter('In Progress');
+  outputFormatter('Done');
 }
 
 changeStatus('freak out', 'Done');
