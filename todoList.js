@@ -20,7 +20,7 @@ function outputHelper(status) {
   for (let key in list) {
     if (list[key] === status) {
       console.log(`  "${key}"`);
-      counter += 1;
+      counter++;
     }
   }
   if (counter === 0) {
