@@ -14,6 +14,11 @@ const DEFAULT_STATUS = STATUS.TO_DO;
 const DEFAULT_PRIORITY = PRIORITY.HIGH;
 
 function addTask(taskName) {
+  for (let task of list) {
+    if (task.name === taskName) {
+      return;
+    }
+  }
   let newTask = {};
   newTask.name = taskName;
   newTask.status = DEFAULT_STATUS;
@@ -40,7 +45,7 @@ function changePriority(taskName, priority) {
     }
   }
   addTask(taskName);
-  return changeStatus(taskName, priority);
+  return changePriority(taskName, priority);
 }
 
 function deleteTask(taskName) {
@@ -75,6 +80,7 @@ function showBy(view) {
   }
 }
 
+// tests
 changeStatus('freak out', 'Done');
 addTask('have a walk');
 deleteTask('have a walk');
