@@ -6,8 +6,8 @@ const STATUS = {
 };
 
 const PRIORITY = {
-  HIGH: 'High',
-  LOW: 'Low',
+  HIGH: 'high',
+  LOW: 'low',
 };
 
 const DEFAULT_STATUS = STATUS.TO_DO;
@@ -91,7 +91,7 @@ addTask('create a new practice task');
 addTask('make a bed');
 addTask('write a post');
 changeStatus('write a post', 'In Progress');
-changePriority('write a post', 'Low');
+changePriority('write a post', 'low');
 showBy('status');
 console.log('\n');
 showBy('priority');
