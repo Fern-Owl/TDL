@@ -1,47 +1,94 @@
-const list = {};
+const list = [];
+const STATUS = {
+  TO_DO: 'To Do',
+  IN_PROGRESS: 'In Progress',
+  DONE: 'Done',
+};
 
-function changeStatus(task, status) {
-  list[task] = status;
+const PRIORITY = {
+  HIGH: 'High',
+  LOW: 'Low',
+};
+
+const DEFAULT_STATUS = STATUS.TO_DO;
+const DEFAULT_PRIORITY = PRIORITY.HIGH;
+
+function addTask(taskName) {
+  let newTask = {};
+  newTask.name = taskName;
+  newTask.status = DEFAULT_STATUS;
+  newTask.priority = DEFAULT_PRIORITY;
+  list.push(newTask);
 }
 
-function addTask(task) {
-  list[task] = 'To Do';
-}
-
-function deleteTask(task) {
-  if (task in list) {
-    delete list[task];
-  }
-}
-
-function outputFormatter(status) {
-  console.log(`${status}:`);
-  let counter = 0;
-  for (let key in list) {
-    if (list[key] === status) {
-      console.log(`  "${key}"`);
-      counter++;
+function changeStatus(taskName, status) {
+  for (let task of list) {
+    if (task.name === taskName) {
+      task.status = status;
+      return;
     }
   }
-  if (counter === 0) {
-    console.log('  -');
+  addTask(taskName);
+  return changeStatus(taskName, status);
+}
+
+function changePriority(taskName, priority) {
+  for (let task of list) {
+    if (task.name === taskName) {
+      task.priority = priority;
+      return;
+    }
+  }
+  addTask(taskName);
+  return changeStatus(taskName, priority);
+}
+
+function deleteTask(taskName) {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].name === taskName) {
+      list.splice(i, 1);
+    }
   }
 }
 
-function showList() {
-  outputFormatter('To Do');
-  outputFormatter('In Progress');
-  outputFormatter('Done');
+function outputFormatter(object, view) {
+  for (let property in object) {
+    console.log(`${object[property]}:`);
+    let counter = 0;
+    for (let task of list) {
+      if (task[view] === object[property]) {
+        console.log(`  "${task.name}"`);
+        counter++;
+      }
+    }
+    if (counter === 0) {
+      console.log('  -');
+    }
+  }
+}
+
+function showBy(view) {
+  if (view === 'status') {
+    outputFormatter(STATUS, view);
+  } else if (view === 'priority') {
+    outputFormatter(PRIORITY, view);
+  }
 }
 
 changeStatus('freak out', 'Done');
 addTask('have a walk');
 deleteTask('have a walk');
-showList();
+showBy('status');
 console.log('\n');
 deleteTask('freak out');
 addTask('create a new practice task');
 addTask('make a bed');
 addTask('write a post');
 changeStatus('write a post', 'In Progress');
-showList();
+changePriority('write a post', 'Low');
+showBy('status');
+console.log('\n');
+showBy('priority');
+for (let item of list) {
+  console.log(item);
+}
